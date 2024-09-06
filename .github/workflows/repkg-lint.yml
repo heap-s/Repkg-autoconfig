@@ -1,0 +1,28 @@
+name: XML Linter
+
+on:
+  push:
+    paths:
+      - 'examples/*.xml'
+      - 'config/*.xml'
+  pull_request:
+    paths:
+      - 'examples/*.xml'
+      - 'config/*.xml'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+    - name: Run XML linter
+      run: python lint_xml_files.py
+      env:
+        GITHUB_WORKSPACE: ${{ github.workspace }}
