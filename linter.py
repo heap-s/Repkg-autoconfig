@@ -1,7 +1,17 @@
 import os
 import xml.etree.ElementTree as ET
-from datetime import datetime
+from datetime import datetime, timedelta
 import glob
+import subprocess
+
+def get_last_modified_date(file_path):
+    try:
+        result = subprocess.run(['git', 'log', '-1', '--format=%cd', '--date=format:%Y%m%d', file_path], 
+                                capture_output=True, text=True, check=True)
+        return result.stdout.strip()
+    except subprocess.CalledProcessError:
+        # If the file is not in git, use the file system's last modified date
+        return datetime.fromtimestamp(os.path.getmtime(file_path)).strftime('%Y%m%d')
 
 def validate_xml_structure(file_path):
     try:
@@ -30,17 +40,19 @@ def validate_xml_structure(file_path):
 def validate_version_date(file_path):
     tree = ET.parse(file_path)
     root = tree.getroot()
-    current_date = datetime.now().strftime("%Y%m%d")
+    last_modified_date = get_last_modified_date(file_path)
 
     log_messages = []
 
     for package in root.findall('package'):
         package_name = package.find('packageName').text
         version = package.find('version').text
-        if current_date not in version:
-            log_messages.append(f"Error: Version does not contain current date for package '{package_name}' in {file_path}")
+        version_date = version.split('-')[-1]
+
+        if version_date != last_modified_date:
+            log_messages.append(f"Error: Version date {version_date} does not match last modified date {last_modified_date} for package '{package_name}' in {file_path}")
         else:
-            log_messages.append(f"Success: Version contains current date for package '{package_name}' in {file_path}")
+            log_messages.append(f"Success: Version date matches last modified date for package '{package_name}' in {file_path}")
 
     return log_messages
 
