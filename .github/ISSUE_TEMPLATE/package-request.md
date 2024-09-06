@@ -12,7 +12,7 @@ A clear and concise description of what you want to happen.
 
 **Additional context**
 Please Add: 
-    - Package Name:
-    - Version:
-    - SHA256:
-    - URL/Mirror:
+- Package Name:
+- Version: 
+- SHA256:
+- URL/Mirror:
