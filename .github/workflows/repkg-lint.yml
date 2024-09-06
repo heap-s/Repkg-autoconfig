@@ -23,6 +23,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip
     - name: Run XML linter
-      run: python lint_xml_files.py
+      run: python linter.py
       env:
         GITHUB_WORKSPACE: ${{ github.workspace }}
