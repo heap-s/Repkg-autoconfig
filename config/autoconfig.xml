@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+    <package>
+        <packageName>test-package</packageName>
+        <version>1.0.0-20240906</version>
+        <sha256>abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890</sha256>
+        <url>https://example.com/test-package-1.0.0.tar.gz</url>
+    </package>
+    <package>
+        <packageName>another-package</packageName>
+        <version>2.1.3-20240906</version>
+        <sha256>0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef</sha256>
+        <url>https://example.com/another-package-2.1.3.tar.gz</url>
+    </package>
+</packages>
